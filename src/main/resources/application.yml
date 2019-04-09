@@ -1,0 +1,68 @@
+#logging:
+#  config: classpath:logback-spring.xml
+spring:
+  datasource:
+    username: root
+    password: tqs123456
+    url: jdbc:mysql://localhost:3306/log?characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+
+      #  thymeleaf
+#  thymeleaf:
+#    cache: false
+#    prefix: classpath:/templates/
+#    check-template-location: true
+#    suffix: .html
+#    encoding: utf-8
+#    servlet:
+#      content-type: text/html
+#    mode: HTML5
+
+
+
+#    schema:
+#      - classpath: security.sql
+
+# 用mybatis 不用jpa
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#  http:
+#    encoding:
+#      charset: utf-8
+#      enabled: true
+
+debug: true
+
+# 从数据库中查出的结果对应着type-aliases-package中的实体类
+
+mybatis-plus:
+  type-aliases-package: tqs.log.entity
+  mapper-locations: classpath:mappers/*Mapper.xml
+  global-config:
+    db-config:
+      id-type: AUTO
+#      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+#      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+
+
