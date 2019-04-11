@@ -22,38 +22,38 @@ public class LoginController {
     private UserMapper userMapper;
 
     @GetMapping(value = "notLogin")
-    public HttpResult<String> notLogin(){
-        return new HttpResult().success("您尚未登录",null);
+    public HttpResult<String> notLogin() {
+        return new HttpResult().success("您尚未登录", null);
     }
 
     @GetMapping(value = "notRole")
-    public HttpResult<String> notRole(){
-        return new HttpResult().success("您没有权限",null);
+    public HttpResult<String> notRole() {
+        return new HttpResult().success("您没有权限", null);
     }
 
     @GetMapping(value = "logout")
-    public ApiResponse logout(){
+    public ApiResponse logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return new ApiResponse().ofMessage(200, "注销成功");
     }
 
     @PostMapping(value = "login")
-    public ApiResponse login(@RequestBody User user){
+    public ApiResponse login(@RequestBody User user) {
 
         String username = user.getUsername();
         String password = user.getPassword();
 
-        Subject  subject = SecurityUtils.getSubject();
+        Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         subject.login(token);
 
         String role = userMapper.getRoleByName(username);
         //根据权限返回特定的数据
-        if ("user".equals(role)){
+        if ("user".equals(role)) {
             return new ApiResponse().ofStatus(ApiResponse.Status.SUCCESS);
         }
-        if ("admin".equals(role)){
+        if ("admin".equals(role)) {
             return new ApiResponse().ofMessage(50001, "欢迎来到管理员界面");
         }
         return new ApiResponse().ofMessage(50002, "权限错误");

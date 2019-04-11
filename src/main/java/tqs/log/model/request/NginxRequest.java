@@ -2,7 +2,7 @@ package tqs.log.model.request;
 
 public class NginxRequest {
 
-    public static class Create{
+    public static class Create {
 
         private String name;
         private String logPath;
@@ -32,7 +32,7 @@ public class NginxRequest {
         }
     }
 
-    public static class Update{
+    public static class Update {
 
         private int id;
         private String uuid;

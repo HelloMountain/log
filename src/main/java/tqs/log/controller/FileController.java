@@ -18,42 +18,41 @@ public class FileController {
     private FileService fileService;
 
     /*
-    * 网页跳转
-    * */
+     * 网页跳转
+     * */
     @GetMapping(value = "/index")
     @ResponseBody
-    public String index(){
+    public String index() {
         return "index";
     }
 
     /*
-    * 生成客户端安装脚本
-    * */
+     * 生成客户端安装脚本
+     * */
     @GetMapping(value = "install/{uuid}/sh")
     @ResponseBody
-    public String installSh(@RequestParam(value = "uuid") String uuid){
+    public String installSh(@RequestParam(value = "uuid") String uuid) {
         return fileService.installSh("path", uuid);
     }
 
     /*
-    * 生成logcoat核心文件
-    * */
+     * 生成logcoat核心文件
+     * */
     @GetMapping(value = "install/{uuid}/file")
     @ResponseBody
-    public void file(@RequestParam(value = "uuid") String uuid){
+    public void file(@RequestParam(value = "uuid") String uuid) {
 
     }
 
 
     /*
-    * 文件上传
-    * */
-
+     * 文件上传
+     * */
 
 
     /*
-    * 文件下载
-    * */
+     * 文件下载
+     * */
     @GetMapping("/download")
     public String downloadFile(HttpServletRequest request, HttpServletResponse response) {
         String fileName = "apache-flume-1.8.0-bin.tar.gz";// 文件名
@@ -99,7 +98,6 @@ public class FileController {
         }
         return "下载失败";
     }
-
 
 
 }

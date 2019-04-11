@@ -37,11 +37,11 @@ public class HttpResult<T> {
         this.data = data;
     }
 
-    public static <T> HttpResult<T> success(String msg, T data){
+    public static <T> HttpResult<T> success(String msg, T data) {
         return new HttpResult<>(1, msg, data);
     }
 
-    public static <T> HttpResult<T> fail(String msg, T data){
+    public static <T> HttpResult<T> fail(String msg, T data) {
         return new HttpResult<>(0, msg, data);
     }
 }

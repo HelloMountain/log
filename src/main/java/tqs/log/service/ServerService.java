@@ -11,7 +11,10 @@ import tqs.log.utils.HttpResult;
 public interface ServerService {
 
     int createServer(NginxRequest.Create nginx, String host);
+
     HttpResult<Boolean> updateServer(NginxRequest.Update nginx);
+
     HttpResult<Server> findById(int id);
+
     HttpResult<Boolean> deleteById(int id);
 }

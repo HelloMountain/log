@@ -11,14 +11,14 @@ import tqs.log.utils.HttpResult;
 public class DefaultController {
 
     @GetMapping(value = "/default")
-    public ApiResponse hello(){
+    public ApiResponse hello() {
         System.out.println("default");
         return new ApiResponse().ofStatus(ApiResponse.Status.NOT_LOGIN);
     }
 
 
     @GetMapping(value = "/default2")
-    public String hello2(){
+    public String hello2() {
         System.out.println("default2");
         return "default2";
     }

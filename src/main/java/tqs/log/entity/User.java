@@ -6,11 +6,11 @@ import lombok.Data;
 
 @Data
 @TableName(value = "user")
-public class User{
+public class User {
 
     private long id;
     private String username;
-    private String  password;
+    private String password;
     private String role;
 
     public User() {

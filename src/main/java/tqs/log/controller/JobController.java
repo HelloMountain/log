@@ -7,8 +7,8 @@ import tqs.log.entity.Server;
 public class JobController {
 
     /*
-    *
-    * */
+     *
+     * */
     public static void main(String[] args) {
 //        Server server = new Server
 

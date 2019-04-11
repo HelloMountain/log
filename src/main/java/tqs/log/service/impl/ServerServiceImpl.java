@@ -22,6 +22,7 @@ public class ServerServiceImpl implements ServerService {
 
     @Autowired
     private ModelMapper modelMapper;
+
     @Override
     public int createServer(NginxRequest.Create nginx, String host) {
         Server server = modelMapper.map(nginx, Server.class);
@@ -43,7 +44,7 @@ public class ServerServiceImpl implements ServerService {
         Server server = modelMapper.map(nginx, Server.class);
         server.setUpdatedAt(new Date());
         int n = serverMapper.updateById(server);
-        return n > 0 ? HttpResult.success("更新成功", true): HttpResult.fail("更新失败", false);
+        return n > 0 ? HttpResult.success("更新成功", true) : HttpResult.fail("更新失败", false);
     }
 
     @Override
@@ -55,10 +56,10 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public HttpResult<Boolean> deleteById(int id) {
         Server server = serverMapper.selectById(id);
-        if (server == null){
+        if (server == null) {
             return new HttpResult().fail("不存在此服务器", false);
         }
         int n = serverMapper.deleteById(id);
-        return n > 0 ? HttpResult.success("删除成功", true): HttpResult.fail("删除失败", false);
+        return n > 0 ? HttpResult.success("删除成功", true) : HttpResult.fail("删除失败", false);
     }
 }

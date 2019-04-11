@@ -1,13 +1,10 @@
 package tqs.log.base;
 
-import org.springframework.stereotype.Component;
-
 import java.io.Serializable;
 
 /*
-* Api结构设计
-* */
-//@Component
+ * Api结构设计
+ * */
 public class ApiResponse implements Serializable {
 
     private int code;
@@ -33,7 +30,7 @@ public class ApiResponse implements Serializable {
         this.message = Status.SUCCESS.getStandardMessage();
     }
 
-    public enum Status{
+    public enum Status {
         SUCCESS(200, "OK"),
         BAD_REQUEST(400, "Bad Request"),
         NOT_FOUND(404, "Not Found"),
@@ -100,15 +97,15 @@ public class ApiResponse implements Serializable {
         this.more = more;
     }
 
-    public ApiResponse ofSuccess(Object data){
-        return new ApiResponse(Status.SUCCESS.getCode(), data,null,false);
+    public ApiResponse ofSuccess(Object data) {
+        return new ApiResponse(Status.SUCCESS.getCode(), data, null, false);
     }
 
-    public ApiResponse ofMessage(int code, String message){
+    public ApiResponse ofMessage(int code, String message) {
         return new ApiResponse(code, null, message);
     }
 
-    public ApiResponse ofStatus(Status status){
+    public ApiResponse ofStatus(Status status) {
         return new ApiResponse(status.getCode(), null, status.getStandardMessage());
     }
 

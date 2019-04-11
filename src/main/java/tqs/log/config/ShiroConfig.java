@@ -15,7 +15,7 @@ import java.util.Map;
 public class ShiroConfig {
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager){
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setLoginUrl("/notLogin");
@@ -33,7 +33,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public SecurityManager securityManager(CustomRealm customRealm){
+    public SecurityManager securityManager(CustomRealm customRealm) {
 
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(customRealm);

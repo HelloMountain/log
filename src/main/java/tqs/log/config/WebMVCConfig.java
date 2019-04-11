@@ -22,19 +22,19 @@ public class WebMVCConfig extends WebMvcConfigurerAdapter implements Application
     private ApplicationContext applicationContext;
 
     /*
-    * 设置上下文
-    * */
+     * 设置上下文
+     * */
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
     /*
-    * thymeleaf模板资源解释器（自定义的需要前端绑定）
-    * */
+     * thymeleaf模板资源解释器（自定义的需要前端绑定）
+     * */
     @Bean
     @ConfigurationProperties(prefix = "spring.thymeleaf")
-    public SpringResourceTemplateResolver templateResolver(){
+    public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver springResourceTemplateResolver = new SpringResourceTemplateResolver();
         springResourceTemplateResolver.setApplicationContext(this.applicationContext);
         springResourceTemplateResolver.setCharacterEncoding("UTF-8");   //模板中文乱码
@@ -45,7 +45,7 @@ public class WebMVCConfig extends WebMvcConfigurerAdapter implements Application
 
     //thymeleaf标准方言解释器
     @Bean
-    public SpringTemplateEngine springTemplateEngine(){
+    public SpringTemplateEngine springTemplateEngine() {
         SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
         springTemplateEngine.setTemplateResolver(templateResolver());
 
@@ -59,8 +59,8 @@ public class WebMVCConfig extends WebMvcConfigurerAdapter implements Application
     }
 
     /*
-    * 视图解析器
-    * */
+     * 视图解析器
+     * */
     @Bean
     public ThymeleafViewResolver thymeleafViewResolver() {
         ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
@@ -70,8 +70,8 @@ public class WebMVCConfig extends WebMvcConfigurerAdapter implements Application
     }
 
     /*
-    * 静态资源加载
-    * */
+     * 静态资源加载
+     * */
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -80,6 +80,7 @@ public class WebMVCConfig extends WebMvcConfigurerAdapter implements Application
 
     /**
      * Bean Util
+     *
      * @return
      */
     @Bean

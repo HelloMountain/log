@@ -23,7 +23,7 @@ public class CustomRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         System.out.println("权限验证");
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        String username = (String)SecurityUtils.getSubject().getPrincipal();
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
         String role = userMapper.getRoleByName(username);
         Set<String> set = new HashSet<>();
         set.add(role);
@@ -34,11 +34,11 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         System.out.println("身份验证");
-        UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
+        UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String password = userMapper.getPasswordByName(token.getUsername());
-        if (password == null){
+        if (password == null) {
             throw new AccountException("用户名不正确");
-        }else if (!password.equals(token.getCredentials().toString())){
+        } else if (!password.equals(token.getCredentials().toString())) {
             throw new AccountException("密码不正确");
         }
         return new SimpleAuthenticationInfo(token.getPrincipal(), password, getName());

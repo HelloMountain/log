@@ -21,7 +21,7 @@ public class ZipUtil {
         this.sourceFileName = sourceFileName;
     }
 
-    public void zip() throws Exception{
+    public void zip() throws Exception {
 
 
         FileOutputStream fileOutputStream = new FileOutputStream(new File(zipFileName));
@@ -36,23 +36,23 @@ public class ZipUtil {
         fileOutputStream.close();
     }
 
-    public void compress(File sourceFile, BufferedOutputStream bos, String base, ZipOutputStream zos) throws Exception{
+    public void compress(File sourceFile, BufferedOutputStream bos, String base, ZipOutputStream zos) throws Exception {
 
         //如果是目录则对其中的每个文件进行压缩
-        if (sourceFile.isDirectory()){
+        if (sourceFile.isDirectory()) {
             File[] filesList = sourceFile.listFiles();
 
 //            assert filesList != null;
             //如果是一个空的目录
-            if (Objects.requireNonNull(filesList).length == 0){
+            if (Objects.requireNonNull(filesList).length == 0) {
                 System.out.println(base + "/");
                 zos.putNextEntry(new ZipEntry(base + "/"));
-            }else {
-                for (File f:filesList) {
+            } else {
+                for (File f : filesList) {
                     compress(f, bos, base + "/" + f.getName(), zos);
                 }
             }
-        }else {
+        } else {
             zos.putNextEntry(new ZipEntry(base));
             FileInputStream fileInputStream = new FileInputStream(sourceFile);
             BufferedInputStream bis = new BufferedInputStream(fileInputStream);
@@ -60,7 +60,7 @@ public class ZipUtil {
             int tag;
             System.out.println(base);
 
-            if ((tag = bis.read()) != -1){
+            if ((tag = bis.read()) != -1) {
                 bos.write(tag);
             }
             fileInputStream.close();
@@ -69,7 +69,7 @@ public class ZipUtil {
     }
 
     //对文件名进行压缩
-    public void compressFile(File sourceFile, String zipFileName) throws Exception{
+    public void compressFile(File sourceFile, String zipFileName) throws Exception {
         //zipFileName  压缩后最外面的文件名
         FileOutputStream fileOutputStream = new FileOutputStream(new File(zipFileName));
         ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
@@ -80,7 +80,7 @@ public class ZipUtil {
         BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
 
         int tag;
-        while ((tag = bufferedInputStream.read()) != -1){
+        while ((tag = bufferedInputStream.read()) != -1) {
             bufferedOutputStream.write(tag);
         }
 
@@ -91,18 +91,20 @@ public class ZipUtil {
         zipOutputStream.close();
         fileOutputStream.close();
     }
+
     //供压缩的文件路径
     private static String logCoatRoot = "zipTest2"; // logCoat 的保存地址
 
     // 压缩后供下载的文件路径
 
     private static String logCoatRootZip = "C:\\Users\\qingshan\\Desktop\\flume.zip";
+
     public static void main(String[] args) {
-            try {
-        ZipUtil zipUtil = new ZipUtil(logCoatRootZip, logCoatRoot);
-        zipUtil.zip();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            ZipUtil zipUtil = new ZipUtil(logCoatRootZip, logCoatRoot);
+            zipUtil.zip();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 }

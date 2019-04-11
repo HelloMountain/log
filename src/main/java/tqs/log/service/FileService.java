@@ -9,7 +9,7 @@ public interface FileService {
     String installSh(String path, String uuid);
 
     /*
-    * 生成logcoat核心
-    * */
+     * 生成logcoat核心
+     * */
     String generateCore(String uuid);
 }

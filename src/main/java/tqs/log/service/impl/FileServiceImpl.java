@@ -21,14 +21,14 @@ public class FileServiceImpl implements FileService {
     //供压缩的文件路径
     private static String logCoatRoot = "C:\\Users\\qingshan\\Desktop\\zipTest2"; // logCoat 的保存地址
 
-   // 压缩后供下载的文件路径
+    // 压缩后供下载的文件路径
     private static String logCoatRootZip = "C:\\Users\\qingshan\\Desktop\\flume.zip";
 
 
     @Override
     public String generateCore(String uuid) {
         String path = logCoatRoot + uuid;
-        if (new File(path).exists()){
+        if (new File(path).exists()) {
             return path;
         }
 
@@ -61,9 +61,9 @@ public class FileServiceImpl implements FileService {
     /*
      * 生成flume配置文件
      * */
-    public String flumeConfig(String path){
+    public String flumeConfig(String path) {
 
-        String fileName =  "nginx.conf";
+        String fileName = "nginx.conf";
         String content = "" +
                 "agent.sources = s1\n" +
                 "agent.channels = c1\n" +
@@ -91,8 +91,7 @@ public class FileServiceImpl implements FileService {
                 "agent.sinks.r1.kafka.producer.acks = 1\n" +
                 "agent.sinks.r1.kafka.producer.linger.ms = 1\n" +
                 "agent.sinks.r1.kafka.producer.compression.type = snappy\n" +
-                "agent.sinks.r1.channel = c1"
-                ;
+                "agent.sinks.r1.channel = c1";
 
         generateFile(logCoatRoot + "\\" + "conf", fileName, content);
         return fileName;
@@ -102,7 +101,7 @@ public class FileServiceImpl implements FileService {
     /*
      * 生成TAILDIRsource日志记录文件
      * */
-    public String generateTail(String path){
+    public String generateTail(String path) {
         String content = "[]";
         String fileName = "taildir_position.json";
         generateFile(logCoatRoot, fileName, content);
@@ -112,7 +111,7 @@ public class FileServiceImpl implements FileService {
     /*
      * 生成启动文件
      * */
-    public String generateSetupSh(String path){
+    public String generateSetupSh(String path) {
         String content = "" +
                 "            #!/bin/bash\n" +
                 //todo 需要修改
@@ -126,10 +125,10 @@ public class FileServiceImpl implements FileService {
     /*
      * 生成文件
      * */
-    private void generateFile (String rootFile, String fileName, String content){
+    private void generateFile(String rootFile, String fileName, String content) {
 
         Path rootLocation = Paths.get(rootFile);
-        if (Files.notExists(rootLocation)){
+        if (Files.notExists(rootLocation)) {
             try {
                 Files.createDirectory(rootLocation);
             } catch (IOException e) {
@@ -146,13 +145,13 @@ public class FileServiceImpl implements FileService {
     }
 
     //复制文件
-    private String copyFile(String sourceFile, String destFile)throws Exception{
+    private String copyFile(String sourceFile, String destFile) throws Exception {
 
         FileInputStream fileInputStream = new FileInputStream(new File(sourceFile));
         FileOutputStream fileOutputStream = new FileOutputStream(new File(destFile));
 
         int tag;
-        while ((tag = fileInputStream.read()) != -1){
+        while ((tag = fileInputStream.read()) != -1) {
             fileOutputStream.write(tag);
         }
         fileOutputStream.close();
@@ -161,24 +160,24 @@ public class FileServiceImpl implements FileService {
     }
 
     //复制目录下的所有文件
-    private String copyDir (String sourcePath, String destPath)throws Exception{
+    private String copyDir(String sourcePath, String destPath) throws Exception {
         File file = new File(sourcePath);
         File[] files = file.listFiles();
 
-        if (!new File(destPath).exists()){
+        if (!new File(destPath).exists()) {
             boolean mkdir = new File(destPath).mkdir();
         }
         for (File f : files) {
-            if (f.isDirectory()){
-                copyDir(f.getPath(), destPath + file.separator  + f.getName());
-            }else {
+            if (f.isDirectory()) {
+                copyDir(f.getPath(), destPath + file.separator + f.getName());
+            } else {
                 copyFile(f.getPath(), destPath + file.separator + f.getName());
             }
         }
         return destPath;
     }
 
-    private String generateCoreZip()throws Exception{
+    private String generateCoreZip() throws Exception {
         String corePath = generateCore("uuid");
         ZipUtil zipUtil = new ZipUtil(logCoatRootZip, corePath);
         zipUtil.zip();

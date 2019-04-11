@@ -6,6 +6,6 @@ import org.springframework.stereotype.Controller;
 public class MonitorController {
 
     /*
-    * 返回flume监控数据
-    * */
+     * 返回flume监控数据
+     * */
 }
