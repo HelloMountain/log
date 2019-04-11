@@ -1,81 +1,25 @@
 package tqs.log.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.Data;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
 
+@Data
 @TableName(value = "user")
-public class User implements Serializable, UserDetails {
+public class User{
 
     private long id;
-    private String name;
+    private String username;
     private String  password;
+    private String role;
 
-    private List<GrantedAuthority> authorityList;
-
-    public long getId() {
-        return id;
+    public User() {
     }
 
-    public void setId(long id) {
+    public User(long id, String username, String password, String role) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+        this.username = username;
         this.password = password;
-    }
-
-    public List<GrantedAuthority> getAuthorityList() {
-        return authorityList;
-    }
-
-    public void setAuthorityList(List<GrantedAuthority> authorityList) {
-        this.authorityList = authorityList;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
+        this.role = role;
     }
 }

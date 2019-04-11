@@ -84,7 +84,7 @@ public class ZipUtil {
             bufferedOutputStream.write(tag);
         }
 
-//从外到里close
+        //从外到里close
         bufferedInputStream.close();
         fileInputStream.close();
         bufferedOutputStream.close();
@@ -95,6 +95,7 @@ public class ZipUtil {
     private static String logCoatRoot = "zipTest2"; // logCoat 的保存地址
 
     // 压缩后供下载的文件路径
+
     private static String logCoatRootZip = "C:\\Users\\qingshan\\Desktop\\flume.zip";
     public static void main(String[] args) {
             try {

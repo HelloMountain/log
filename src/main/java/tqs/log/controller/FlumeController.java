@@ -15,7 +15,6 @@ public class FlumeController {
     @Autowired
     private FlumeService flumeService;
 
-
     /*
     * 获得安装flume说明
     * */
