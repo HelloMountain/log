@@ -1,17 +1,17 @@
 package tqs.log.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tqs.log.dao.ServerMapper;
 import tqs.log.entity.Server;
 import tqs.log.model.request.NginxRequest;
-import tqs.log.model.request.NginxRequestCreate;
-import tqs.log.model.request.NginxRequestUpdate;
 import tqs.log.service.ServerService;
 import tqs.log.utils.HttpResult;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,6 +25,11 @@ public class ServerServiceImpl implements ServerService {
 
     @Override
     public int createServer(NginxRequest.Create nginx, String host) {
+        List<Server> temp = this.findByName(nginx.getName());
+        int n = 0;
+        if (temp != null && temp.size() != 0){
+            return n;
+        }
         Server server = modelMapper.map(nginx, Server.class);
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 
@@ -35,16 +40,16 @@ public class ServerServiceImpl implements ServerService {
         server.setUpdatedAt(new Date());
 
         //todo ; 返回的是插入成功的数量，不是server的id
-        int id = serverMapper.insert(server);
-        return id;
+        n = serverMapper.insert(server);
+        return n;
     }
 
     @Override
-    public HttpResult<Boolean> updateServer(NginxRequest.Update nginx) {
+    public int updateServer(NginxRequest.Update nginx) {
         Server server = modelMapper.map(nginx, Server.class);
         server.setUpdatedAt(new Date());
         int n = serverMapper.updateById(server);
-        return n > 0 ? HttpResult.success("更新成功", true) : HttpResult.fail("更新失败", false);
+        return n;
     }
 
     @Override
@@ -54,12 +59,26 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public HttpResult<Boolean> deleteById(int id) {
+    public List<Server> findByName(String name) {
+        QueryWrapper<Server> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name", name);
+        List<Server> serverList = serverMapper.selectList(queryWrapper);
+        return serverList;
+    }
+
+    @Override
+    public int deleteById(int id) {
         Server server = serverMapper.selectById(id);
         if (server == null) {
-            return new HttpResult().fail("不存在此服务器", false);
+            return 0;
         }
         int n = serverMapper.deleteById(id);
-        return n > 0 ? HttpResult.success("删除成功", true) : HttpResult.fail("删除失败", false);
+        return n;
+    }
+
+    @Override
+    public List<Server> findAll() {
+        List<Server> list = serverMapper.selectList(null);
+        return list;
     }
 }

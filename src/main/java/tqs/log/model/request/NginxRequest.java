@@ -1,94 +1,43 @@
 package tqs.log.model.request;
 
+import lombok.Data;
+
+
 public class NginxRequest {
 
+    @Data
     public static class Create {
 
         private String name;
         private String logPath;
+        private Boolean published;
 
         public Create() {
         }
 
-        public Create(String name, String logPath) {
+        public Create(String name, String logPath, Boolean published) {
             this.name = name;
             this.logPath = logPath;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getLogPath() {
-            return logPath;
-        }
-
-        public void setLogPath(String logPath) {
-            this.logPath = logPath;
+            this.published = published;
         }
     }
 
+    @Data
     public static class Update {
 
         private int id;
-        private String uuid;
         private String name;
         private String logPath;
-        private String host;
+        private Boolean published;
 
         public Update() {
         }
 
-        public Update(int id, String uuid, String name, String logPath, String host) {
+        public Update(int id, String name, String logPath, Boolean published) {
             this.id = id;
-            this.uuid = uuid;
             this.name = name;
             this.logPath = logPath;
-            this.host = host;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getUuid() {
-            return uuid;
-        }
-
-        public void setUuid(String uuid) {
-            this.uuid = uuid;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getLogPath() {
-            return logPath;
-        }
-
-        public void setLogPath(String logPath) {
-            this.logPath = logPath;
-        }
-
-        public String getHost() {
-            return host;
-        }
-
-        public void setHost(String host) {
-            this.host = host;
+            this.published = published;
         }
     }
 

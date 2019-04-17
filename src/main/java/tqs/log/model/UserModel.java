@@ -1,14 +1,12 @@
-package tqs.log.entity;
+package tqs.log.model;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
 
 
 @Data
-@TableName(value = "user")
-public class User {
+public class UserModel {
 
     private long id;
     //登录时用的名字
@@ -24,10 +22,10 @@ public class User {
     private Date updatedAt;
     private Boolean published;
 
-    public User() {
+    public UserModel() {
     }
 
-    public User(long id, String username, String name, String password, String role, String avatar, Date createdAt, Date updatedAt, Boolean published) {
+    public UserModel(long id, String username, String name, String password, String role, String avatar, Date createdAt, Date updatedAt, Boolean published) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -39,7 +37,7 @@ public class User {
         this.published = published;
     }
 
-    public User(String username, String name, String password, String role, String avatar, Date createdAt, Date updatedAt, Boolean published) {
+    public UserModel(String username, String name, String password, String role, String avatar, Date createdAt, Date updatedAt, Boolean published) {
         this.username = username;
         this.name = name;
         this.password = password;

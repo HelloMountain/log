@@ -6,14 +6,17 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` INT (11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `username` varchar(32) DEFAULT NULL COMMENT '用户名',
+  `name` varchar (32) DEFAULT NULL COMMENT '真实姓名',
   `password` varchar (32) DEFAULT NULL COMMENT '密码',
+  `role` varchar (32) DEFAULT "user" NOT NULL COMMENT '角色',
+  `avatar` text DEFAULT NULL COMMENT '头像',
   `created_at` datetime NOT NULL COMMENT '创建时间',
   `updated_at` datetime NOT NULL COMMENT '更新时间',
   `published` tinyint(1) DEFAULT 1 COMMENT '是否发布',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-insert into user values (null,'root','123456');
+insert into user values (null, 'admin', '青山', '123456','user' ,'https://raw.githubusercontent.com/wiki/HelloMountain/ImageBed/vue/avatar.jpg', now(), now(),1);
 
 -- ----------------------------
 -- 权限表

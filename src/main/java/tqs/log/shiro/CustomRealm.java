@@ -38,7 +38,10 @@ public class CustomRealm extends AuthorizingRealm {
         String password = userMapper.getPasswordByName(token.getUsername());
         if (password == null) {
             throw new AccountException("用户名不正确");
-        } else if (!password.equals(token.getCredentials().toString())) {
+        } else if (!password.equals(new String((char[]) token.getCredentials()))) {
+            System.out.println(password.equals(token.getCredentials().toString()));
+            System.out.println(password);
+            System.out.println(new String((char[]) token.getCredentials()));//new String((char[]) token.getCredentials())
             throw new AccountException("密码不正确");
         }
         return new SimpleAuthenticationInfo(token.getPrincipal(), password, getName());

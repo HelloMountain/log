@@ -4,6 +4,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tqs.log.LogApplicationTests;
 import tqs.log.dao.ServerMapper;
+import tqs.log.entity.Server;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -26,6 +29,14 @@ public class ServerServiceImplTest extends LogApplicationTests {
     @Test
     public void findById() {
         System.out.println(serverMapper.selectById(1));
+    }
+
+    @Test
+    public void findByName(){
+        List<Server> list = serverService.findByName("test");
+        list.forEach(sever->{
+            System.out.println(sever);
+        });
     }
 
     @Test

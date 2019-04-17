@@ -1,5 +1,6 @@
 package tqs.log.config;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -27,7 +28,7 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.company.xunwu.controller"))
+                .apis(RequestHandlerSelectors.basePackage("tqs.log.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

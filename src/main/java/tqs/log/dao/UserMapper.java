@@ -5,10 +5,12 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 import tqs.log.entity.User;
 
+import java.util.List;
+
 @Repository
 public interface UserMapper extends BaseMapper<User> {
 
-    @Select("SELECT username, password FROM user WHERE username = #{username}")
+    @Select("SELECT * FROM user WHERE username = #{username}")
     User getUserByName(String username);
 
     @Select("SELECT password FROM user WHERE username = #{username}")
@@ -16,4 +18,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("SELECT role FROM user WHERE username = #{username}")
     String getRoleByName(String username);
+
+    @Select("SELECT * FROM user WHERE username is like #{username}")
+    List<User> findUserByUserName(String username);
 }
