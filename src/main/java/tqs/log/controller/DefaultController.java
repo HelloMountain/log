@@ -14,10 +14,11 @@ import java.util.List;
 
 @Controller
 @ResponseBody
-@RequestMapping(value = "/test/api/")
+@RequestMapping(value = "/api/test")
 @Api("swagger ui 注释 api 级别")
 public class DefaultController {
 
+    private String downloadUrl = "localhost:8081/download";
     @ApiOperation("swagger ui 注释 方法级别")
     @RequestMapping(value="/hello",method=RequestMethod.GET)
     public  String hello1() {
@@ -60,5 +61,18 @@ public class DefaultController {
         users.add(testModel2);
 
         return new ApiResponse(200, users, "success");
+    }
+
+    @GetMapping(value = "/code")
+    public ApiResponse getCode(){
+        int[] data = {100, 200, 300, 400, 500, 600, 700, 700, 700, 700};
+        return new ApiResponse(200, data, "状态码");
+    }
+
+    @GetMapping(value = "/leader")
+    public ApiResponse leader(){
+//        String  leader =  "curl -o /tmp/logCoat.zip -L ' "+ $downloadUrl$uuid/file'";
+        String leader = "curl -o /tmp/logCoat.zip -L  "+ downloadUrl;
+        return new ApiResponse(200, leader, "安装引导程序");
     }
 }

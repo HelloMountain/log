@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import tqs.log.LogApplicationTests;
 import tqs.log.dao.UserMapper;
+import tqs.log.entity.User;
+import tqs.log.model.UserModel;
 import tqs.log.service.UserService;
 
 import java.util.ArrayList;
@@ -21,7 +23,10 @@ public class UserServiceImplTest extends LogApplicationTests {
     private UserMapper userMapper;
 
     @Test
-    public void findUserByUserName() {
+    public void likeUserByUserName() {
+        String username = "qs";
+        List<UserModel> list = userService.likeUserByUserName(username);
+        list.forEach(userModel -> System.out.println(userModel));
     }
 
     @Test
@@ -42,6 +47,7 @@ public class UserServiceImplTest extends LogApplicationTests {
 
     @Test
     public void findByUserName() {
+
     }
 
     @Test

@@ -27,6 +27,9 @@ spring:
 
 
       #  thymeleaf
+#es地址
+spring.data.elasticsearch.cluster-nodes: 127.0.0.1:9300
+spring.data.elasticsearch.cluster-name: tqs
 #  thymeleaf:
 #    cache: false
 #    prefix: classpath:/templates/
@@ -52,7 +55,7 @@ spring:
 #      charset: utf-8
 #      enabled: true
 
-debug: false
+debug: true
 
 # 从数据库中查出的结果对应着type-aliases-package中的实体类
 
@@ -67,3 +70,4 @@ mybatis-plus:
 
 server:
   port: 8081
+##es地址

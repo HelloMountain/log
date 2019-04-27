@@ -1,6 +1,5 @@
 package tqs.log.controller;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -62,9 +61,9 @@ public class AdminController {
     /*
      * 通过用户名模糊查找用户
      * */
-    @GetMapping(value = "/findByUserName")
+    @GetMapping(value = "/likeByUserName")
     public ApiResponse findByUserName(@RequestParam(value = "username") String username) {
-        List<UserModel> result = userService.findByUserName(username);
+        List<UserModel> result = userService.likeUserByUserName(username);
         return new ApiResponse().ofSuccess(result);
     }
 
@@ -72,10 +71,15 @@ public class AdminController {
      * 查找所有用户
      * */
     @GetMapping(value = "/list")
-    public ApiResponse findAll() {
-        List<UserModel> result = userService.findAll();
+    public ApiResponse findAll(@RequestParam(value = "name") String name) {
+//        System.out.println(name);
+//        System.out.println(name.equals(""));
+        List<UserModel> result = null;
+        if (!name.equals("")){
+            result = userService.likeUserByUserName(name);
+        }else {
+            result = userService.findAll();
+        }
         return new ApiResponse().ofSuccess(result);
     }
-
-
 }

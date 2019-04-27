@@ -32,6 +32,11 @@ public class NginxController {
     @PostMapping(value = "/create")
     @ResponseBody
     public ApiResponse createNginx(@RequestBody NginxRequest.Create nginx, HttpServletRequest request) {
+
+        List<Server> servers = serverService.findByName(nginx.getName());
+        if (servers != null && servers.size() > 0){
+            return new ApiResponse(400, null, "已存在该服务器");
+        }
         String host = request.getRemoteHost();
         int n = serverService.createServer(nginx, host);
         return  n > 0 ? new ApiResponse().ofMessage(200, "添加成功"):new ApiResponse().ofMessage(200, "添加失败");

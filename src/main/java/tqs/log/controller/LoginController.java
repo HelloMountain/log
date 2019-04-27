@@ -63,7 +63,7 @@ public class LoginController {
 
 //        String role = userMapper.getRoleByName(username);
         String role = "user";
-        UserModel usermodel = userService.findUserByUserName(username);
+        UserModel usermodel = userService.findByUserName(username);
         LoginModel loginModel = modelMapper.map(usermodel, LoginModel.class);
         //根据权限返回特定的数据
         if ("user".equals(role)) {

@@ -24,10 +24,13 @@ public class UserServiceImpl implements UserService {
     private ModelMapper modelMapper;
 
     @Override
-    public UserModel findUserByUserName(String username) {
-        User user = userMapper.getUserByName(username);
-        UserModel userModel = modelMapper.map(user, UserModel.class);
-        return userModel;
+    public List<UserModel> likeUserByUserName(String username) {
+        List<User> users = userMapper.likeUsersByUserName(username);
+        List<UserModel> userModels = new ArrayList<>();
+        users.forEach(user -> {
+            userModels.add(modelMapper.map(user, UserModel.class));
+        });
+        return userModels;
     }
 
     @Override
@@ -68,15 +71,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserModel> findByUserName(String username) {
-        List<User> users = userMapper.findUserByUserName(username);
-        List<UserModel> result = new ArrayList<>();
-
-        if (users != null && users.size() > 0){
-            users.forEach(user -> {
-                result.add(modelMapper.map(user, UserModel.class));
-            });
-        }
+    public UserModel findByUserName(String username) {
+        User user = userMapper.getUserByName(username);
+        UserModel result = modelMapper.map(user, UserModel.class);
         return result;
     }
 

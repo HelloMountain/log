@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 public interface UserService {
-    UserModel findUserByUserName(String name);
+    UserModel findByUserName(String name);
 
     int createUser(UserRequest.Create create);
 
@@ -17,7 +17,7 @@ public interface UserService {
 
     int updateUser(UserRequest.Update update);
 
-    List<UserModel> findByUserName(String username);
+    List<UserModel> likeUserByUserName(String username);
 
     List<UserModel> findAll();
 
