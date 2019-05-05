@@ -140,6 +140,14 @@
             <version>2.1.4.RELEASE</version>
         </dependency>
 
+        <!-- joda-time 时间转换-->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+
+
 
 
 

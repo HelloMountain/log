@@ -1,7 +1,9 @@
 package tqs.log.rep;
 
-import org.springframework.data.elasticsearch.repository.ElasticsearchCrudRepository;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Repository;
 import tqs.log.entity.Log;
 
-public interface LogRepository extends ElasticsearchCrudRepository<Log, Integer> {
+@Repository
+public interface LogRepository extends ElasticsearchRepository<Log, String> {
 }

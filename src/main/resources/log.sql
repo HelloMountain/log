@@ -78,7 +78,7 @@ CREATE TABLE `sys_project` (
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE `log` (
   `id` int (11) NOT NULL unique AUTO_INCREMENT COMMENT '主键id',
-  `timestamp` varchar(32) NOT NULL COMMENT '时间戳',
+  `timestamp` int(11) NOT NULL COMMENT '时间戳',
   `version`  varchar(32)  NOT NULL COMMENT '版本号',
   `client` varchar(32)  NOT NULL COMMENT '客户端请求地址',
   `url`  varchar(32) NOT NULL COMMENT '请求中的当前URI',
@@ -91,6 +91,7 @@ CREATE TABLE `log` (
   `ua` text DEFAULT NULL COMMENT '客户端浏览器相关信息',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 -- ----------------------------

@@ -3,6 +3,7 @@ package tqs.log.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import tqs.log.service.FileService;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 @Controller
+@RequestMapping(value = "/api")
 public class FileController {
 
     @Autowired
@@ -55,10 +57,12 @@ public class FileController {
      * */
     @GetMapping("/download")
     public String downloadFile(HttpServletRequest request, HttpServletResponse response) {
-        String fileName = "apache-flume-1.8.0-bin.tar.gz";// 文件名
+//        String fileName = "apache-flume-1.8.0-bin.tar.gz";// 文件名
+        String fileName = "zipTest3.zip";// 文件名
         if (fileName != null) {
             //设置文件路径
-            File file = new File("C:/Users/qingshan/Downloads/apache-flume-1.8.0-bin.tar.gz");
+//            File file = new File("C:/Users/qingshan/Downloads/apache-flume-1.8.0-bin.tar.gz");
+            File file = new File("C:\\Users\\qingshan\\log\\zipTest2.zip");
             //File file = new File(realPath , fileName);
             if (file.exists()) {
                 response.setContentType("application/force-download");// 设置强制下载不打开
@@ -74,6 +78,9 @@ public class FileController {
                     while (i != -1) {
                         os.write(buffer, 0, i);
                         i = bis.read(buffer);
+                    }
+                    if (os != null){
+                        os.close();
                     }
                     return "下载成功";
                 } catch (Exception e) {

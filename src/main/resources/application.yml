@@ -55,7 +55,7 @@ spring.data.elasticsearch.cluster-name: tqs
 #      charset: utf-8
 #      enabled: true
 
-debug: true
+debug: false
 
 # 从数据库中查出的结果对应着type-aliases-package中的实体类
 

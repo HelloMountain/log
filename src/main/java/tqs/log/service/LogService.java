@@ -1,8 +1,9 @@
 package tqs.log.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tqs.log.rep.LogRepository;
+import tqs.log.model.CodeModel;
+
+import java.util.List;
 
 @Service
 public interface LogService {
@@ -12,6 +13,7 @@ public interface LogService {
     //统计报错的接口
 
     //统计HTTP响应状态码
+    List<CodeModel> code();
 
 
     //统计服务器并发量

@@ -8,6 +8,9 @@ import tqs.log.base.ApiResponse;
 import tqs.log.entity.User;
 import tqs.log.model.TestModel;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -72,7 +75,61 @@ public class DefaultController {
     @GetMapping(value = "/leader")
     public ApiResponse leader(){
 //        String  leader =  "curl -o /tmp/logCoat.zip -L ' "+ $downloadUrl$uuid/file'";
-        String leader = "curl -o /tmp/logCoat.zip -L  "+ downloadUrl;
+        String leader = "curl -o /tmp/logCoat.zip -L"+ downloadUrl;
+        leader = "if [ -z ${'$'}JAVA_HOME ];then" +
+                "echo 'I require ${'$'}JAVA_HOME variable setting but it's not exists.  Aborting.';" +
+                "exit 1;" +
+                "fi";
         return new ApiResponse(200, leader, "安装引导程序");
     }
+
+    @GetMapping(value = "/sh")
+    public String downloadFile(HttpServletRequest request, HttpServletResponse response) {
+        String fileName = "install.sh";// 文件名
+        if (fileName != null) {
+        //设置文件路径
+        File file = new File("C:/Users/qingshan/log/zipTest2/conf/install.sh");
+        //File file = new File(realPath , fileName);
+        if (file.exists()) {
+            response.setContentType("application/force-download");// 设置强制下载不打开
+            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
+            byte[] buffer = new byte[1024];
+            FileInputStream fis = null;
+            BufferedInputStream bis = null;
+            try {
+                fis = new FileInputStream(file);
+                bis = new BufferedInputStream(fis);
+                OutputStream os = response.getOutputStream();
+                int i = bis.read(buffer);
+                while (i != -1) {
+                    os.write(buffer, 0, i);
+                    i = bis.read(buffer);
+                }
+                if (os != null){
+                    os.close();
+                }
+                return "下载成功";
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (bis != null) {
+                    try {
+                        bis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (fis != null) {
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+        return "下载失败";
+}
+
 }

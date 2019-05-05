@@ -101,7 +101,8 @@ public class ZipUtil {
 
     public static void main(String[] args) {
         try {
-            ZipUtil zipUtil = new ZipUtil(logCoatRootZip, logCoatRoot);
+//            ZipUtil zipUtil = new ZipUtil(logCoatRootZip, logCoatRoot);
+            ZipUtil zipUtil = new ZipUtil("C:\\Users\\qingshan\\Desktop\\piczip.zip", "C:\\Users\\qingshan\\Desktop\\pic");
             zipUtil.zip();
         } catch (Exception e) {
             e.printStackTrace();

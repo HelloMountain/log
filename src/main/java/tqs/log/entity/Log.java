@@ -4,14 +4,15 @@ import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
-@Document(indexName = "nginx", type = "log")
+@Document(indexName = "nelson-nginx-2019.05.02", type = "doc")
 public class Log implements Serializable {
 
     private int id;
 //    时间戳
-    private String timestamp;
+    private Date timestamp;
 //    版本号
     private String version;
 //    客户端请求地址
@@ -36,7 +37,7 @@ public class Log implements Serializable {
     public Log() {
     }
 
-    public Log(int id, String timestamp, String version, String client, String url, String status, String domian, String host, String size, String responsetime, String referer, String ua) {
+    public Log(int id, Date timestamp, String version, String client, String url, String status, String domian, String host, String size, String responsetime, String referer, String ua) {
         this.id = id;
         this.timestamp = timestamp;
         this.version = version;
@@ -51,7 +52,7 @@ public class Log implements Serializable {
         this.ua = ua;
     }
 
-    public Log(String timestamp, String version, String client, String url, String status, String domian, String host, String size, String responsetime, String referer, String ua) {
+    public Log(Date timestamp, String version, String client, String url, String status, String domian, String host, String size, String responsetime, String referer, String ua) {
         this.timestamp = timestamp;
         this.version = version;
         this.client = client;
