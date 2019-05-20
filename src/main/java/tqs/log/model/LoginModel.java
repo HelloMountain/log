@@ -13,6 +13,6 @@ public class LoginModel {
 
     private String password;
     private String role;
-    //头像
+
     private String avatar;
 }

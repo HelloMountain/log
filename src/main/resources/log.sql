@@ -75,24 +75,29 @@ CREATE TABLE `sys_project` (
 -- log字段
 -- ----------------------------
 
-DROP TABLE IF EXISTS `log`;
-CREATE TABLE `log` (
+.INT
+-- ----------------------------
+-- 浏览器
+-- ----------------------------
+
+DROP TABLE IF EXISTS `browser`;
+CREATE TABLE `browser` (
   `id` int (11) NOT NULL unique AUTO_INCREMENT COMMENT '主键id',
-  `timestamp` int(11) NOT NULL COMMENT '时间戳',
-  `version`  varchar(32)  NOT NULL COMMENT '版本号',
-  `client` varchar(32)  NOT NULL COMMENT '客户端请求地址',
-  `url`  varchar(32) NOT NULL COMMENT '请求中的当前URI',
-  `status` int(11) NOT NULL COMMENT '请求状态',
-  `domian` varchar(32) NOT NULL COMMENT '请求地址',
-  `host` varchar(32) NOT NULL COMMENT 'HTTP请求行的主机名>HOST 请求头字段>',
-  `size` varchar(32) NOT NULL COMMENT '文件内容大小',
-  `responsetime` varchar(32) NOT NULL COMMENT '处理客户端请求使用的时间,单位为秒',
-  `referer` varchar(32) NOT NULL COMMENT '哪个页面链接访问过来的',
-  `ua` text DEFAULT NULL COMMENT '客户端浏览器相关信息',
+  `browser`  varchar(32)  NOT NULL COMMENT '版本号',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+-- ----------------------------
+-- 国内分布
+-- ----------------------------
+DROP TABLE IF EXISTS `addr`;
+CREATE TABLE `addr` (
+  `id` int (11) NOT NULL unique AUTO_INCREMENT COMMENT '主键id',
+  `log_id` VARCHAR (32) NOT NULL COMMENT 'log id',
+  `ip` VARCHAR (32) NOT NULL COMMENT 'ip',
+  `addr`  varchar(32)  NOT NULL COMMENT '国内位置',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- 任务表

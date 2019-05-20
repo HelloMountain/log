@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Document(indexName = "nelson-nginx-2019.05.02", type = "doc")
+@Document(indexName = "nelson-nginx-2019.05.18", type = "doc")
 public class Log implements Serializable {
 
     private int id;

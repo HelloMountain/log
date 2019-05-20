@@ -3,7 +3,7 @@ package tqs.log.model;
 import lombok.Data;
 
 @Data
-public class TopUrlModel {
+public class UrlTimeModel {
     private String url;
-    private int num;
+    private String responsetime;
 }

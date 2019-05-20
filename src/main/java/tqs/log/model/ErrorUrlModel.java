@@ -1,6 +1,9 @@
 package tqs.log.model;
 
-public class ErrorUlrModel {
+import lombok.Data;
+
+@Data
+public class ErrorUrlModel {
     private  int num;
     private String url;
 }

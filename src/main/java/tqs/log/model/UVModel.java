@@ -2,8 +2,10 @@ package tqs.log.model;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
-public class TopUrlModel {
-    private String url;
+public class UVModel {
+    private Date day;
     private int num;
 }

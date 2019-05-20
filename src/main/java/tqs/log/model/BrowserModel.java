@@ -2,8 +2,9 @@ package tqs.log.model;
 
 import lombok.Data;
 
+
 @Data
-public class TopUrlModel {
-    private String url;
+public class BrowserModel {
+    private String browser;
     private int num;
 }

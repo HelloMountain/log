@@ -1,0 +1,6 @@
+{"@timestamp":"2019-04-03T22:40:59+08:00","@version":"1","client":"127.0.0.1","url":"/index.html","status":"304","domian":"localhost","host":"127.0.0.1","size":"0","responsetime":"0.000","referer":"-","ua":"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36"}
+
+10.255.252.4 | - | 16/Mar/2018:20:29:57 +0800 | GET /zh-CN/baby_credits?baby_id=761756&v=2&page=0 HTTP/1.1 | api.shiguangxiaowu.cn | 200 | 1238 | - | com.liveyap.timehut/5.2.2.1 (android 6.0.1, OPPO A57) (SOURCE/oppostore, VERSION_CODE/255) | 58.53.78.68 | unix:///tmp/saturn.sock | 200 | 0.077 | 0.077
+
+timestamp=()
+echo "{}"
