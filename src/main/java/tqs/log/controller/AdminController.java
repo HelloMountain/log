@@ -8,6 +8,7 @@ import tqs.log.model.UserModel;
 import tqs.log.model.request.UserRequest;
 import tqs.log.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -27,6 +28,12 @@ public class AdminController {
      * */
     @PostMapping(value = "/add")
     public ApiResponse addUser(@RequestBody UserRequest.Create create) {
+        if ("1".equals(create.getRole())){
+            create.setRole("user");
+        }else {
+            create.setRole("admin");
+        }
+        create.setAvatar("https://raw.githubusercontent.com/wiki/HelloMountain/ImageBed/vue/avatar.jpg");
         int n = userService.createUser(create);
         return n > 0 ? new ApiResponse().ofStatus(ApiResponse.Status.SUCCESS) : new ApiResponse(200, create, "添加用户失败");
     }
@@ -81,5 +88,15 @@ public class AdminController {
             result = userService.findAll();
         }
         return new ApiResponse().ofSuccess(result);
+    }
+
+    /*
+    * 返回用户自己的信息
+    * */
+    @GetMapping(value = "/selfInfo")
+    public ApiResponse getSelfInfo(@RequestParam(value = "id") int id){
+        List<UserModel> userModels = new ArrayList<>();
+        userModels.add(userService.findById(id));
+        return new ApiResponse(200, userModels, "我的信息");
     }
 }

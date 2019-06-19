@@ -11,14 +11,16 @@ public class NginxRequest {
         private String name;
         private String logPath;
         private Boolean published;
+        private String host;
 
         public Create() {
         }
 
-        public Create(String name, String logPath, Boolean published) {
+        public Create(String name, String logPath, Boolean published, String host) {
             this.name = name;
             this.logPath = logPath;
             this.published = published;
+            this.host = host;
         }
     }
 
@@ -29,15 +31,17 @@ public class NginxRequest {
         private String name;
         private String logPath;
         private Boolean published;
+        private String host;
 
         public Update() {
         }
 
-        public Update(int id, String name, String logPath, Boolean published) {
+        public Update(int id, String name, String logPath, Boolean published, String host) {
             this.id = id;
             this.name = name;
             this.logPath = logPath;
             this.published = published;
+            this.host = host;
         }
     }
 

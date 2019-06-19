@@ -15,4 +15,5 @@ public class LoginModel {
     private String role;
 
     private String avatar;
+    private Boolean published;
 }

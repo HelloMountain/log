@@ -18,15 +18,15 @@ public interface  LogMapper extends BaseMapper<Log> {
 
 
     //状态码
-    @Select("select status code, count(status) num from log group by  status DESC limit 5")
+    @Select("select status code, count(status) num from log group by  status ORDER BY num DESC limit 5")
     List<CodeModel> getCode();
 
     //
-    @Select("select client, count(client) num from log group by client DESC limit 5")
+    @Select("select client, count(client) num from log group by client ORDER BY num  DESC limit 5")
     List<TopIpModel> getTopIp();
 
     //访问url
-    @Select("select url, count(url) num from log group by url DESC limit 5")
+    @Select("select url, count(url) num from log group by url  ORDER BY num DESC limit 5")
     List<TopUrlModel> getTopUrl();
 
     //访问pv  是对的
@@ -34,15 +34,15 @@ public interface  LogMapper extends BaseMapper<Log> {
     PVModel getPvModel(String date);
 
     //访问uv   //todo : count client还是homian 还是host
-    @Select("select * from (select DATE_FORMAT(timestamp,'%Y-%m-%d') day,count(DISTINCT 'client')num from log group by DAY) as temp where day = #{date}")
+    @Select("select day , COUNT(DISTINCT client)num from (select DATE_FORMAT(timestamp,'%Y-%m-%d')day,client from log) as temp GROUP BY day HAVING day = #{date}")
     UVModel getUvModel(String date);
 
     //错误url
-    @Select("select COUNT(url)num, url from log where status like '4%' GROUP BY url DESC LIMIT 5")
+    @Select("select COUNT(url)num, url from log where status like '4%' GROUP BY url ORDER BY num  DESC LIMIT 5")
     List<ErrorUrlModel> getErrorUlrModel();
 
     //响应时间url
-    @Select("select url, responsetime from log  ORDER BY responsetime DESC")
+    @Select("select url,max(responsetime) as responsetime from log group by url  ORDER BY responsetime DESC LIMIT 5")
     List<UrlTimeModel> getResponsetimeModel();
 
     //查询最新时间
@@ -50,7 +50,7 @@ public interface  LogMapper extends BaseMapper<Log> {
     String getNewTime();
 
     //查找大于logId的log
-    @Select("select id logId, ip from `log` where id > #{logId}")
+    @Select("select id logId , client ip from `log` where id > #{logId}")
     List<Addr> getLogs(int logId);
 
 

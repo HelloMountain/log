@@ -19,6 +19,6 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("SELECT role FROM user WHERE username = #{username}")
     String getRoleByName(String username);
 
-    @Select("SELECT * FROM user WHERE username like #{username}")
+    @Select("SELECT * FROM user WHERE username like CONCAT(CONCAT('%', #{username}),'%')")//CONCAT(CONCAT('%', #{username}), '%')
     List<User> likeUsersByUserName(String username);
 }

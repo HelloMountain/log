@@ -22,6 +22,6 @@ public class SchedulerTest extends LogApplicationTests {
 
     @Test
     public void addAddr() {
-        scheduler.getAddr("118.28.8.8");
+        scheduler.addAddr();
     }
 }

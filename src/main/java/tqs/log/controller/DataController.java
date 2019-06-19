@@ -89,7 +89,13 @@ public class DataController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ArrayList<String>  strbody = restTemplate.exchange(uri, HttpMethod.GET, entity,ArrayList.class).getBody();
+        ArrayList<String>  strbody = null;
+        try {
+            strbody = restTemplate.exchange(uri, HttpMethod.GET, entity, ArrayList.class).getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ApiResponse(400, "","addr");
+        }
         System.out.println(strbody);
         return new ApiResponse(200, strbody, "addr");
     }
@@ -105,9 +111,17 @@ public class DataController {
         return new ApiResponse(200, topUrlModels, "topUrl");
     }
 
+
     @GetMapping(value = "/topResponse")
     public ApiResponse topResponse(){
         List<UrlTimeModel> topResponses = logMapper.getResponsetimeModel();
+//        List<UrlTimeModel> topResponses = new ArrayList<>();
+//        for (int i = 0; i<5; i++){
+//            UrlTimeModel urlTimeModel  = new UrlTimeModel();
+//            urlTimeModel.setUrl("页面"+(i+1));
+//            urlTimeModel.setResponsetime((i+1)*100+"");
+//            topResponses.add(urlTimeModel);
+//        }
         return new ApiResponse(200, topResponses, "topResponse");
     }
 

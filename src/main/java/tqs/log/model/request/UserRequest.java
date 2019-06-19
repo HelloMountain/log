@@ -30,7 +30,7 @@ public class UserRequest {
         //进入之后显示的名字
         private String name;
 
-//        private String password;
+        private String password;
 //        private String role;
         //头像
 //        private String avatar;

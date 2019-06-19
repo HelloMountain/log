@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+//import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+//import org.thymeleaf.spring4.SpringTemplateEngine;
+//import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
+//import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 
 @Configuration
 @EnableWebMvc
@@ -32,42 +32,42 @@ public class WebMVCConfig extends WebMvcConfigurerAdapter implements Application
     /*
      * thymeleaf模板资源解释器（自定义的需要前端绑定）
      * */
-    @Bean
-    @ConfigurationProperties(prefix = "spring.thymeleaf")
-    public SpringResourceTemplateResolver templateResolver() {
-        SpringResourceTemplateResolver springResourceTemplateResolver = new SpringResourceTemplateResolver();
-        springResourceTemplateResolver.setApplicationContext(this.applicationContext);
-        springResourceTemplateResolver.setCharacterEncoding("UTF-8");   //模板中文乱码
-        springResourceTemplateResolver.setPrefix("/templates/");
-        return springResourceTemplateResolver;
-    }
+//    @Bean
+//    @ConfigurationProperties(prefix = "spring.thymeleaf")
+//    public SpringResourceTemplateResolver templateResolver() {
+//        SpringResourceTemplateResolver springResourceTemplateResolver = new SpringResourceTemplateResolver();
+//        springResourceTemplateResolver.setApplicationContext(this.applicationContext);
+//        springResourceTemplateResolver.setCharacterEncoding("UTF-8");   //模板中文乱码
+//        springResourceTemplateResolver.setPrefix("/templates/");
+//        return springResourceTemplateResolver;
+//    }
 
 
-    //thymeleaf标准方言解释器
-    @Bean
-    public SpringTemplateEngine springTemplateEngine() {
-        SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
-        springTemplateEngine.setTemplateResolver(templateResolver());
+//    //thymeleaf标准方言解释器
+//    @Bean
+//    public SpringTemplateEngine springTemplateEngine() {
+//        SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
+//        springTemplateEngine.setTemplateResolver(templateResolver());
+//
+//        //支持spring EL表达式
+//        springTemplateEngine.setEnableSpringELCompiler(true);
+//
+//        // 支持SpringSecurity方言
+//        SpringSecurityDialect securityDialect = new SpringSecurityDialect();
+//        springTemplateEngine.addDialect(securityDialect);
+//        return springTemplateEngine;
+//    }
 
-        //支持spring EL表达式
-        springTemplateEngine.setEnableSpringELCompiler(true);
-
-        // 支持SpringSecurity方言
-        SpringSecurityDialect securityDialect = new SpringSecurityDialect();
-        springTemplateEngine.addDialect(securityDialect);
-        return springTemplateEngine;
-    }
-
-    /*
-     * 视图解析器
-     * */
-    @Bean
-    public ThymeleafViewResolver thymeleafViewResolver() {
-        ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
-        thymeleafViewResolver.setTemplateEngine(springTemplateEngine());
-        thymeleafViewResolver.setCharacterEncoding("UTF-8");   //防止模板中文乱码
-        return thymeleafViewResolver;
-    }
+//    /*
+//     * 视图解析器
+//     * */
+//    @Bean
+//    public ThymeleafViewResolver thymeleafViewResolver() {
+//        ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
+//        thymeleafViewResolver.setTemplateEngine(springTemplateEngine());
+//        thymeleafViewResolver.setCharacterEncoding("UTF-8");   //防止模板中文乱码
+//        return thymeleafViewResolver;
+//    }
 
     /*
      * 静态资源加载

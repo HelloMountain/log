@@ -8,6 +8,7 @@ import tqs.log.base.ApiResponse;
 import tqs.log.entity.Server;
 import tqs.log.model.ServerModel;
 import tqs.log.model.request.NginxRequest;
+import tqs.log.service.FileService;
 import tqs.log.service.ServerService;
 import tqs.log.utils.HttpResult;
 
@@ -23,6 +24,9 @@ public class NginxController {
     private ServerService serverService;
 
     @Autowired
+    private FileService fileService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
 
@@ -33,13 +37,17 @@ public class NginxController {
     @ResponseBody
     public ApiResponse createNginx(@RequestBody NginxRequest.Create nginx, HttpServletRequest request) {
 
-        List<Server> servers = serverService.findByName(nginx.getName());
+        List<Server> servers = serverService.findByLikeName(nginx.getName());
         if (servers != null && servers.size() > 0){
             return new ApiResponse(400, null, "已存在该服务器");
         }
-        String host = request.getRemoteHost();
-        int n = serverService.createServer(nginx, host);
-        return  n > 0 ? new ApiResponse().ofMessage(200, "添加成功"):new ApiResponse().ofMessage(200, "添加失败");
+//        String host = request.getRemoteHost();
+
+        //todo: 获取创建服务器信息，创建对应的客户端压缩包
+        int n = serverService.createServer(nginx);
+        long id = serverService.findByName(nginx.getName()).getId();
+        fileService.generateCore(id+"", nginx.getLogPath());
+        return  n > 0 ? new ApiResponse(200, id, "添加成功"):new ApiResponse().ofMessage(200, "添加失败");
     }
 
     /*
@@ -57,9 +65,9 @@ public class NginxController {
      * */
     @GetMapping(value = "/findById")
     @ResponseBody
-    public HttpResult<Server> findById(@RequestParam(value = "id") int id) {
-        HttpResult<Server> result = serverService.findById(id);
-        return result;
+    public ApiResponse findById(@RequestParam(value = "id") int id) {
+        Server result = serverService.findById(id);
+        return new ApiResponse(200, result, "查询成功");
     }
 
     /*
@@ -67,8 +75,8 @@ public class NginxController {
     * */
     @GetMapping(value = "/findByName")
     @ResponseBody
-    public ApiResponse findByName(@RequestParam(value = "name") String name){
-        List<Server> data = serverService.findByName(name);
+        public ApiResponse findByName(@RequestParam(value = "name") String name){
+        List<Server> data = serverService.findByLikeName(name);
         ApiResponse result = new ApiResponse().ofSuccess(data);
         return result;
     }
@@ -97,5 +105,15 @@ public class NginxController {
 
         int n = serverService.deleteById(id);
         return n > 0? new ApiResponse(200, n, "删除成功"):new ApiResponse(200, n, "删除失败");
+    }
+
+    /*
+     * 批量删除
+     * */
+    @GetMapping(value = "/batchdelete")
+    @ResponseBody
+    public ApiResponse batchDelete(@RequestParam(value = "ids")Integer[] ids){
+        int n = serverService.batchDelete(ids);
+        return n > 0 ? new ApiResponse().ofMessage(200, "删除成功"): new ApiResponse().ofMessage(200, "删除失败");
     }
 }

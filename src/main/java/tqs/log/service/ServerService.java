@@ -13,15 +13,19 @@ import java.util.List;
 @Service
 public interface ServerService {
 
-    int createServer(NginxRequest.Create nginx, String host);
+    int createServer(NginxRequest.Create nginx);
 
     int updateServer(NginxRequest.Update nginx);
 
-    HttpResult<Server> findById(int id);
+    Server findById(int id);
 
-    List<Server> findByName(String name);
+    List<Server> findByLikeName(String name);
+
+    Server findByName(String name);
 
     int deleteById(int id);
 
     List<Server> findAll();
+
+    int batchDelete(Integer[] ids);
 }

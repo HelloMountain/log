@@ -42,15 +42,16 @@ public class Scheduler {
     private AddrMapper addrMapper;
 
     //每隔一秒运行一次
-//    @Scheduled(fixedRate = 1000)
+//    @Scheduled(fixedDelay = 10000)
     public void esToSqlTask(){
-
+        System.out.println(1);
         String newTime = logMapper.getNewTime();
         if (newTime == null){
             newTime = "2018-05-18T13:00:19.847+08:00";
         }else {
             newTime = newTime.replace(" ", "T") + "+08:00";
         }
+//        System.out.println(newTime);
         BoolQueryBuilder builders = QueryBuilders.boolQuery().must(QueryBuilders.rangeQuery("timestamp").gt(newTime));
         Iterable<Log> search = logRepository.search(builders);
         search.forEach(log -> {
@@ -62,14 +63,30 @@ public class Scheduler {
     }
 
     //每隔一秒运行一次,取出log中的数据，创建对应的addr
-//    @Scheduled(fixedRate = 1000)
+//    @Scheduled(fixedDelay = 10000)
     public void addAddr(){
-        int addrMaxId = addrMapper.getMaxLogId();
-        List<Addr> addrs = logMapper.getLogs(addrMaxId);
+        int logMaxId = addrMapper.getMaxLogId();
+        System.out.println(logMaxId);
+        List<Addr> addrs = logMapper.getLogs(logMaxId);
+        if (addrs == null || addrs.size() == 0){
+            return;
+        }
         for (Addr addr:addrs) {
-            ArrayList<String> temp = getAddr(addr.getIp());
+            System.out.println(addr);
+            ArrayList<String> temp = null;
+            try {
+                temp = getAddr(addr.getIp());
+            } catch (Exception e) {
+                e.printStackTrace();
+                continue;
+            }
+
+            if (temp == null || temp.size() == 0){
+                return;
+            }
             if ("中国".equals(temp.get(0))){
                 addr.setAddr(temp.get(1));
+                System.out.println(addr);
                 addrMapper.insert(addr);
             }
         }
@@ -77,11 +94,9 @@ public class Scheduler {
 
     public void addBrowser(String string){
         String[] split = string.split(" ");
-        System.out.println(split[split.length - 1].split("/")[0]);
 
         String browser = split[split.length - 1].split("/")[0];
         if ("Safari".equals(browser)){
-            System.out.println("Chrome");
             browser = "Chrome";
         }
         Browser b = new Browser();
@@ -89,7 +104,7 @@ public class Scheduler {
         browserMapper.insert(b);
     }
 
-    public ArrayList<String> getAddr(String ip){
+    public ArrayList<String> getAddr(String ip) throws Exception{
         if (ip == null){
             return null;
         }
@@ -100,9 +115,10 @@ public class Scheduler {
         ArrayList<String> strbody = restTemplate.exchange(url, HttpMethod.GET, entity,ArrayList.class).getBody();
 //        Addr addr = new Addr();
 //        addr.setAddr(strbody.get(1));
-        for (int i = 0; i < strbody.size(); i++) {
-            System.out.println(strbody.get(i));
-        }
+//        for (int i = 0; i < strbody.size(); i++) {
+//            System.out.println(strbody.get(i));
+//        }
+        System.out.println(strbody);
         return strbody;
     }
 

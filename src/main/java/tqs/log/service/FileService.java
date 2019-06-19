@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 public interface FileService {
 
     //生成客户端安装脚本
-    String installSh(String path, String uuid);
+    String installSh(String id);
 
     /*
      * 生成logcoat核心
      * */
-    String generateCore(String uuid);
+    String generateCore(String id, String logPath);
 }

@@ -1,6 +1,7 @@
 package tqs.log.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import tqs.log.model.request.NginxRequest;
 import tqs.log.service.ServerService;
 import tqs.log.utils.HttpResult;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -24,8 +26,8 @@ public class ServerServiceImpl implements ServerService {
     private ModelMapper modelMapper;
 
     @Override
-    public int createServer(NginxRequest.Create nginx, String host) {
-        List<Server> temp = this.findByName(nginx.getName());
+    public int createServer(NginxRequest.Create nginx) {
+        List<Server> temp = this.findByLikeName(nginx.getName());
         int n = 0;
         if (temp != null && temp.size() != 0){
             return n;
@@ -35,7 +37,7 @@ public class ServerServiceImpl implements ServerService {
 
         //todo: 通过uuid创建对应的文件
         server.setUuid(uuid);
-        server.setHost(host);
+//        server.setHost(host);
         server.setCreatedAt(new Date());
         server.setUpdatedAt(new Date());
 
@@ -53,17 +55,24 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public HttpResult<Server> findById(int id) {
+    public Server findById(int id) {
         Server server = serverMapper.selectById(id);
-        return new HttpResult<>(server);
+        return server;
     }
 
     @Override
-    public List<Server> findByName(String name) {
+    public List<Server> findByLikeName(String name) {
         QueryWrapper<Server> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("name", name);
         List<Server> serverList = serverMapper.selectList(queryWrapper);
         return serverList;
+    }
+
+    @Override
+    public Server findByName(String name) {
+        QueryWrapper<Server> queryWrapper = new QueryWrapper<>();
+        Server server = serverMapper.selectOne(queryWrapper.eq("name", name));
+        return server;
     }
 
     @Override
@@ -80,5 +89,11 @@ public class ServerServiceImpl implements ServerService {
     public List<Server> findAll() {
         List<Server> list = serverMapper.selectList(null);
         return list;
+    }
+
+    @Override
+    public int batchDelete(Integer[] ids) {
+        int n = serverMapper.deleteBatchIds(Arrays.asList(ids));
+        return n;
     }
 }

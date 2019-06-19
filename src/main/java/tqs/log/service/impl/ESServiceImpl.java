@@ -1,12 +1,10 @@
 package tqs.log.service.impl;
 
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 import tqs.log.dao.LogMapper;
-import tqs.log.entity.GoodsInfo;
 import tqs.log.entity.Log;
 import tqs.log.rep.LogRepository;
 import tqs.log.service.ESService;

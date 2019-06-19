@@ -12,7 +12,7 @@ import java.util.List;
 public interface AddrMapper extends BaseMapper<Addr> {
 
     //获取addr最大id
-    @Select("select MAX(log_id) logId from addr")
+    @Select("select IFNull(MAX(log_id), 0) logId from addr")
     int getMaxLogId();
 
     @Select("select COUNT(addr)num, addr from addr GROUP BY addr")

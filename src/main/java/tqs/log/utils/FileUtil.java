@@ -1,11 +1,28 @@
 package tqs.log.utils;
 
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+import tqs.log.dao.BrowserMapper;
+import tqs.log.dao.LogMapper;
+import tqs.log.entity.Browser;
+import tqs.log.entity.Log;
 
 import java.io.*;
 import java.util.Random;
 
+@Component
 public class FileUtil {
+
+    @Autowired
+    private LogMapper logMapper;
+
+    @Autowired
+    private Scheduler scheduler;
+
+    @Autowired
+    private BrowserMapper browserMapper;
 
     /*
     * 修改文件内容
@@ -106,7 +123,7 @@ public class FileUtil {
         String temp1 = "{\"timestamp\":\"";
         String temp2 = "";//timestamp
         String temp3 = "\",\"version\":\"1\",\"client\":\"";
-        String temp4 = "";//client  ip
+        String temp4 = "";//client = ip
         String temp5 = "\",\"url\":\"";
         String temp6 = "";//url
         String temp7 = "\",\"status\":\"";
@@ -121,22 +138,23 @@ public class FileUtil {
 
 
         //temp2
-        DateTime dateTime = new DateTime();
-        DateTime time = new DateTime("2019-05-18T22:40:59+08:00");
+//        DateTime dateTime = new DateTime();
+        DateTime dateTime = new DateTime("2019-06-02T22:40:59+08:00");
         //推迟
         System.out.println(dateTime.plusSeconds(1));
         //提前
         System.out.println(dateTime.minusSeconds(1));
 
         //
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
-        BufferedReader bufferedReader1 = new BufferedReader(new FileReader(filePath2));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));//读取下载的log
+        BufferedReader bufferedReader1 = new BufferedReader(new FileReader(filePath2));//读取IP
         String t = null;
         String t1 = null;
-        String[] t3 = {"Chrome", "IE", "QQ", "IE 8.0", "2345", "IE 11.0", "搜狗", "Firefox"};
+        String[] t3 = {"Chrome", "IE", "QQ", "IE-8.0", "2345", "IE-11.0", "搜狗", "Firefox"};
 
         Random random = new Random();
-        for (int i = 0; i < 100; i++) {
+//        Log log = new Log();
+        for (int i = 0; i < 5; i++) {
             if ((t = bufferedReader.readLine()) != null &&(t1 = bufferedReader1.readLine()) != null ){
                 String[] s = t.split(" | ");
 //                if (i <= 4){
@@ -147,7 +165,8 @@ public class FileUtil {
 //                }
 
 //            System.out.println(temp);
-                temp2 = dateTime.minusSeconds(i).toString();
+
+                temp2 = dateTime.minusMinutes(i).toString();
                 temp6 = s[8];
                 temp8 = s[13];
                 temp10 = s[15];
@@ -155,13 +174,61 @@ public class FileUtil {
                 temp4 = t1;
                 int index = random.nextInt(7);//[0,n)
                 temp14 = t3[index] + "/";
-//                temp14 = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36";
+                temp14 = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36";
                 String temp = temp1 + temp2 + temp3 + temp4 + temp5 + temp6 + temp7 + temp8 + temp9 + temp10
                         + temp11 + temp12 + temp13 + temp14 + temp15;
                 System.out.println(temp);
-                writeFile("C:\\Users\\qingshan\\Desktop\\log.txt", temp);
-                writeFile("C:\\Users\\qingshan\\Desktop\\log.txt", "\r\n");
+
+//                log.setTimestamp(dateTime.minusMinutes(i).minusSeconds(random.nextInt(60)).toDate());
+//                log.setVersion("1");
+//                log.setClient(temp4);
+//                log.setUrl(temp6);
+//                log.setStatus(temp8);
+//                log.setSize(temp10);
+//                log.setResponsetime(temp12);
+//                log.setDomian("192.168.137.122");
+//                log.setHost("api.shiguangxiaowu.cn");
+//                log.setReferer("-");
+//                log.setUa(temp14);
+//
+//                scheduler.addBrowser(temp14);
+//                logMapper.insert(log);
+
+//
+//                writeFile("C:\\Users\\qingshan\\Desktop\\log.txt", temp);
+//                writeFile("C:\\Users\\qingshan\\Desktop\\log.txt", "\r\n");
             }
+        }
+    }
+
+    public void createBrowser(){
+        String[] t3 = {"Chrome", "IE", "QQ", "IE-8.0", "2345", "IE-11.0", "搜狗", "Firefox"};
+        Random random = new Random();
+        Browser browser = new Browser();
+        int index = 0;
+        for (int i = 0; i<49950; i++){
+            index = random.nextInt(100);//[0,n)
+            if (index < 40){
+//                System.out.println(0);
+                browser.setBrowser(t3[0]);
+            }else if (index >= 40 && index <50){
+//                System.out.println(1);
+                browser.setBrowser(t3[1]);
+            }else if (index >= 50 && index <56){
+//                System.out.println(2);
+
+                browser.setBrowser(t3[2]);
+            }else if (index >= 56 && index <62){
+//                System.out.println(3);
+
+                browser.setBrowser(t3[3]);
+            }else{
+//                System.out.println(index/10 - 2);
+
+                browser.setBrowser(t3[index/10 - 2]);
+            }
+//            browser.setBrowser(t3[index]);
+            browserMapper.insert(browser);
         }
     }
     public static void main(String[] args) {
@@ -183,7 +250,9 @@ public class FileUtil {
 
         FileUtil fileUtil = new FileUtil();
         try {
-            fileUtil.createData("C:\\Users\\qingshan\\Downloads\\nginx_log-master\\nginx_log\\nginx.log", "C:\\Users\\qingshan\\Desktop\\ip2.txt");
+//            fileUtil.createData("C:\\Users\\qingshan\\Downloads\\nginx_log-master\\nginx_log\\nginx.log"
+//                    , "C:\\Users\\qingshan\\Desktop\\ip2.txt");
+            fileUtil.createBrowser();
         } catch (Exception e) {
             e.printStackTrace();
         }

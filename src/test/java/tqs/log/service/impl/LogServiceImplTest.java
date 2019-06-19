@@ -9,11 +9,13 @@ import tqs.log.dao.BrowserMapper;
 import tqs.log.dao.LogMapper;
 import tqs.log.entity.Addr;
 import tqs.log.entity.Browser;
+import tqs.log.model.UrlTimeModel;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 public class LogServiceImplTest extends LogApplicationTests {
@@ -59,7 +61,7 @@ public class LogServiceImplTest extends LogApplicationTests {
         System.out.println(temp);
     }
 
-    @Test
+//    @Test
     public void timeTest(){
                 String iso = "2019-05-02 20:55:45";//2019-05-02T20:55:46+08:00
         DateFormat sdf1 = new SimpleDateFormat("[yyyy-mm-dd'T'HH:mm:ss.SSS'Z']");
@@ -115,8 +117,9 @@ public class LogServiceImplTest extends LogApplicationTests {
         Addr addr = new Addr();
         int num = -1;
         for (int i = array.length - 1; i >= 0; i--) {
-            addr.setAddr(array[random.nextInt(32)]);
-            int num2 = random.nextInt(1)*100 + (random.nextInt(7)*10+3) + random.nextInt(10);
+//            addr.setAddr(array[random.nextInt(35)]);
+            addr.setAddr(array[i]);
+            int num2 = random.nextInt(2)*100 + (random.nextInt(7)*10+3) + random.nextInt(10) + random.nextInt(500);
             for (int j = 0; j < num2; j++) {
                 addr.setLogId(++num);
                 addr.setIp(num + "");
@@ -129,5 +132,27 @@ public class LogServiceImplTest extends LogApplicationTests {
 //            addr.setAddr(array[random.nextInt(32)]);
 //            addrMapper.insert(addr);
 //        }
+    }
+
+    @Test
+    public void getResponse(){
+        List<UrlTimeModel>  urlTimeModels = logMapper.getResponsetimeModel();
+        for (int i = 0; i < urlTimeModels.size(); i++) {
+            System.out.println(urlTimeModels.get(i));
+        }
+    }
+
+    @Test
+    public void nextInt(){
+        Random random = new Random();
+        System.out.println(random.nextInt(10));
+        System.out.println(random.nextInt(10));
+        System.out.println(random.nextInt(10));
+        System.out.println(random.nextInt(10));
+    }
+
+    @Test
+    public void getMaxLogId(){
+        System.out.println(addrMapper.getMaxLogId());
     }
 }

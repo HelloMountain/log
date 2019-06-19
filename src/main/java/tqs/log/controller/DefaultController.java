@@ -84,52 +84,68 @@ public class DefaultController {
     }
 
     @GetMapping(value = "/sh")
+//    public String downloadFile(@RequestParam(value = "ID")String id, HttpServletRequest request, HttpServletResponse response) {
     public String downloadFile(HttpServletRequest request, HttpServletResponse response) {
-        String fileName = "install.sh";// 文件名
-        if (fileName != null) {
-        //设置文件路径
-        File file = new File("C:/Users/qingshan/log/zipTest2/conf/install.sh");
+        //获取server相关信息
+
+
+        //生成对应的installl.sh
+
+        //提供下载
+//            String fileName = "install.sh";// 文件名
+            String fileName = "log2.txt";// 文件名
+            if (fileName != null) {
+            //设置文件路径//C:\Users\qingshan\Desktop\test_4.zip
+//            File file = new File("C:/Users/qingshan/log/zipTest2/conf/install.sh");
+//            File file = new File("C:/Users/qingshan/Desktop/test_4.zip");
+            File file = new File("C:/Users/qingshan/Desktop/log2.txt");
         //File file = new File(realPath , fileName);
-        if (file.exists()) {
-            response.setContentType("application/force-download");// 设置强制下载不打开
-            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
-            byte[] buffer = new byte[1024];
-            FileInputStream fis = null;
-            BufferedInputStream bis = null;
-            try {
-                fis = new FileInputStream(file);
-                bis = new BufferedInputStream(fis);
-                OutputStream os = response.getOutputStream();
-                int i = bis.read(buffer);
-                while (i != -1) {
-                    os.write(buffer, 0, i);
-                    i = bis.read(buffer);
-                }
-                if (os != null){
-                    os.close();
-                }
-                return "下载成功";
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (bis != null) {
-                    try {
-                        bis.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+            if (file.exists()) {
+                response.setContentType("application/force-download");// 设置强制下载不打开
+                response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
+                byte[] buffer = new byte[1024];
+                FileInputStream fis = null;
+                BufferedInputStream bis = null;
+                try {
+                    fis = new FileInputStream(file);
+                    bis = new BufferedInputStream(fis);
+                    OutputStream os = response.getOutputStream();
+                    int i = bis.read(buffer);
+                    while (i != -1) {
+                        os.write(buffer, 0, i);
+                        i = bis.read(buffer);
                     }
-                }
-                if (fis != null) {
-                    try {
-                        fis.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (os != null){
+                        os.close();
+                    }
+                    return "下载成功";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (bis != null) {
+                        try {
+                            bis.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (fis != null) {
+                        try {
+                            fis.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
         }
-    }
         return "下载失败";
-}
+    }
 
+    @GetMapping(value = "/sh2")
+    public ApiResponse downloadFile2(@RequestParam(value = "ID")int id, HttpServletResponse response){
+        System.out.println(id);
+        System.out.println(response.getStatus());
+        return new ApiResponse(200, "id", "");
+    }
 }

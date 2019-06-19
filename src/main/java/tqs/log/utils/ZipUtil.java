@@ -1,5 +1,6 @@
 package tqs.log.utils;
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -8,6 +9,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Component
+@Data
 public class ZipUtil {
 
     private String zipFileName;
@@ -53,22 +55,23 @@ public class ZipUtil {
                 }
             }
         } else {
-            zos.putNextEntry(new ZipEntry(base));
+            System.out.println(base);
+            zos.putNextEntry(new ZipEntry(base));  //创建zip压缩点base
             FileInputStream fileInputStream = new FileInputStream(sourceFile);
             BufferedInputStream bis = new BufferedInputStream(fileInputStream);
 
             int tag;
             System.out.println(base);
 
-            if ((tag = bis.read()) != -1) {
+            while ((tag = bis.read()) != -1) {
                 bos.write(tag);
             }
-            fileInputStream.close();
             bis.close();
+            fileInputStream.close();
         }
     }
 
-    //对文件名进行压缩
+    //对单个文件名进行压缩
     public void compressFile(File sourceFile, String zipFileName) throws Exception {
         //zipFileName  压缩后最外面的文件名
         FileOutputStream fileOutputStream = new FileOutputStream(new File(zipFileName));
@@ -93,17 +96,21 @@ public class ZipUtil {
     }
 
     //供压缩的文件路径
-    private static String logCoatRoot = "zipTest2"; // logCoat 的保存地址
+//    private static String logCoatRoot = "zipTest2"; // logCoat 的保存地址
 
     // 压缩后供下载的文件路径
 
-    private static String logCoatRootZip = "C:\\Users\\qingshan\\Desktop\\flume.zip";
+//    private static String logCoatRootZip = "C:\\Users\\qingshan\\Desktop\\flume.zip";
 
     public static void main(String[] args) {
         try {
 //            ZipUtil zipUtil = new ZipUtil(logCoatRootZip, logCoatRoot);
-            ZipUtil zipUtil = new ZipUtil("C:\\Users\\qingshan\\Desktop\\piczip.zip", "C:\\Users\\qingshan\\Desktop\\pic");
+            ZipUtil zipUtil = new ZipUtil("C:\\Users\\qingshan\\Desktop\\test1.zip", "C:\\test");
+//            zipUtil.zip();
+//            File file = new File("C:\\Users\\qingshan\\Desktop\\test\\setup.sh");
+//            zipUtil.compressFile(file, "C:\\Users\\qingshan\\Desktop\\test.zip");
             zipUtil.zip();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
